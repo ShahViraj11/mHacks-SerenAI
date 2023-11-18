@@ -7,8 +7,8 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 def create():
   
 
-    db = client['sample_airbnb']
-    coll = db["listingsAndReviews"]
+    db = client['user_info']
+    coll = db["addressconsole"]
         
     item = {
         "_id": "69696969",
@@ -22,8 +22,8 @@ def create():
     
 
 def search():
-    db = client['sample_airbnb']
-    coll = db["listingsAndReviews"]
+    db = client['user_info']
+    coll = db["addressconsole"]
     review_dict = coll.find_one({"_id": "69696969"})
     print(review_dict["attending"])   
 
