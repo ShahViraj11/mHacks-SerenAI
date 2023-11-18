@@ -6,13 +6,25 @@
     <title>Simple HTML Page</title>
 </head>
 
+  <body>
+    {% if session %}
+    <h1>Welcome {{session.userinfo.name}}!</h1>
+    <p>{{data}}</p>
+    <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
+    <div><pre>{{pretty}}</pre></div>
+    {% else %}
+    <h1 id="profileDropDown">Welcome Guest</h1>
+    <p><a href="/login" id="qsLoginBtn">Login</a></p>
+    {% endif %}
+  </body>
+
+
 <body>
-    <h1>Welcome to My Website!</h1>
-    <ul>
-            <li>{{data}}</li>
-            <li>World</li>
-            <li>From Ann Arbor</li>
-            <br>
-    </ul>
+  <h1>Upload Video</h1>
+  <form method="post" enctype="multipart/form-data">
+    <label for="video">Select video to upload:</label>
+    <input type="file" id="video" name="video" required>
+    <button type="submit">Upload</button>
+  </form>
 </body>
 </html>
