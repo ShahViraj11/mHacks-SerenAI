@@ -123,6 +123,13 @@ def hello_gcs(cloud_event):
     sentiment_subjectivity = blob.sentiment.subjectivity
     
     sent_analysis = sentiment_analysis(sentiment_polarity, sentiment_subjectivity, sorted_word_scores)
+
+    dominant_emotion = max(emotions_dict, key=emotions_dict.get)
+    dominant_emotion_count = emotions_dict[dominant_emotion]
+
+    dominant_emotion_message = (f"The dominant emotion expressed in the video is '{dominant_emotion}' "
+                                f"with a count of {dominant_emotion_count}. This suggests that during the video,"
+                                f" the most frequently observed emotional expression was one of '{dominant_emotion}'.")
     
     document = {
         "event_id": cloud_event["id"],
@@ -134,6 +141,7 @@ def hello_gcs(cloud_event):
         "sentiment": sentiment,
         "emotions_dict": emotions_dict,
         "sent_analysis":sent_analysis,
+        "dominant_emotion_message": dominant_emotion_message
         
     }
 
