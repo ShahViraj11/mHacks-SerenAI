@@ -202,8 +202,14 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     global info_dict
     info_dict = dict(session)
-    session["user"] = token
-    return redirect("/form")  # Redirect to the form page
+    db = client['user_info']
+    coll = db["addressconsole"]
+    test = coll.find_one(info_dict['user']['userinfo']['email'])
+    if test == None:
+        session["user"] = token
+        return redirect("/form") 
+    else:   
+        return("You have already filled out the form")
 
 
 @app.route("/form")
@@ -221,7 +227,7 @@ def submit_form():
     if uploaded_file:
         storage_client = storage.Client()
         bucket_name = 'user_mood_bucket'
-        destination_blob_name = 'user_video.mp4'
+        destination_blob_name = f'{info_dict['user']['userinfo']['name']}.mp4'
         bucket = storage_client.get_bucket(bucket_name)
         blob = bucket.blob(destination_blob_name)
         blob.upload_from_file(uploaded_file)
@@ -270,12 +276,14 @@ def submit_form():
 def pdf_check():
     db = client['user_info']
     coll = db['videoanalyses']
-    data = coll.find()
-    sorted_data = sorted(data, key=lambda x: dateutil.parser.parse(x['updated']), reverse=True)
-    dispdf(sorted_data[0])
+    try:
+        data = coll.find_one({ 'file': f'{info_dict['user']['userinfo']['name']}.mp4'})
+        dispdf(data)
 
-    return send_from_directory('C:\\Users\\thelo\\OneDrive\\Desktop\\Python Projects\\mHacks-SerenAI\\mHacks\\static',
+        return send_from_directory('C:\\Users\\thelo\\OneDrive\\Desktop\\Python Projects\\mHacks-SerenAI\\mHacks\\static',
                                'Analysis_Report.pdf', as_attachment=True)
+    except:
+        return render_template("thank_you.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 3000))
