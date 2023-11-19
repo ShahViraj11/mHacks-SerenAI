@@ -1,99 +1,160 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>How can we help you?</title>
+<head>
+    <title>How can we help you today?</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet"> <!-- Lato font -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <style>
-      html, body {
-        min-height: 100%;
-        margin: 0;
-        padding: 0;
-        background-image: url('./static/img/form.png'); /* Add your background image URL here */
-        background-size: cover; /* Ensure the image covers the full background */
-        background-position: center; /* Center the image */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      body, div, form, input, select, p {
-        padding: 0;
-        margin: 0;
-        outline: none;
-        font-family: Roboto, Arial, sans-serif;
-        font-size: 14px;
-        color: #fff; /* Adjust text color for visibility */
-        line-height: 22px;
-      }
-      h1, h4 {
-        color: #fff; /* Adjust heading color for visibility */
-      }
-      form {
-        width: 50%; /* Adjust form width */
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for form */
-        box-shadow: 0 2px 5px #ccc;
-      }
-      input, select, textarea {
-        width: 100%;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #333; /* Dark background for inputs */
-        color: #fff; /* Input text color */
-      }
-      /* Other styles remain unchanged */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif; /* Lato for overall text */
+        }
+
+        h1, h4, .btn-block button {
+            font-family: 'Lato', sans-serif; /* Lato for headings and buttons */
+            font-weight: 700; /* Bold font for headings and buttons */
+        }
+
+        body {
+            background-image: url('form3.png'); /* Full screen background image */
+            background-size: cover; /* Cover the entire screen */
+            background-position: center; /* Center the background image */
+        }
+
+        .testbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        form {
+            max-width: 600px; /* Maximum width of the form */
+            margin: auto; /* Centers the form */
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for form */
+            box-shadow: 0 2px 5px #ccc;
+            border-radius: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 10px;
+        }
+
+        input:hover, textarea:hover, select:hover {
+            outline: none;
+            border: 1px solid #095484;
+        }
+
+        .btn-block {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #095484;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0666a3;
+        }
+
+        /* Adjust input, select, and textarea width for smaller screens */
+        @media (max-width: 768px) {
+            input, select, textarea {
+                width: 100%;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="testbox">
-      <form action="http://localhost:5000/submit_form" method="POST">
-        <h1>How can we help you?</h1>
-        <p>Please send us details about the incident you would like to report. Our Complaint Center will analyze your complaint and take the appropriate measures in order that the reported situation will not occur at any other time in the future.</p>
-        <hr/>
-        <div class="item">
-          <p>Date of complaint</p>
-          <input type="date" name="date_of_complaint" required/>
-          <i class="fas fa-calendar-alt"></i>
-        </div>
-        <div class="item">
-          <p>Name</p>
-          <input type="text" name="first_name" placeholder="First" />
-          <input type="text" name="last_name" placeholder="Last" />
-        </div>
-        <div class="item address">
-          <p>Address</p>
-          <div class="street">
-            <input type="text" name="street_address" placeholder="Street address" />
-            <input type="text" name="street_address2" placeholder="Street address line 2" />
-            <input type="text" name="city" placeholder="City" />
-            <input type="text" name="region" placeholder="Region" />
-            <input type="text" name="postal_code" placeholder="Postal / zip code" />
-            <select name="country">
-              <option value="">Country</option>
-              <option value="1">Russia</option>
-              <option value="2">Germany</option>
-              <option value="3">France</option>
-              <option value="4">Armenia</option>
-              <option value="5">USA</option>
-            </select>
-          </div>
-        </div>
-        <div class="item location">
-          <p>Incident location</p>
-          <input type="text" name="incident_location"/>
-        </div>
-        <div class="item complaint-details">
-          <p>Consult regarding</p>
-          <div class="complaint-details-item">
-            <textarea rows="5" name="consult_details"></textarea>
-          </div>
-        </div>
-        <h4>Your signature</h4>
-        <textarea rows="5" name="signature"></textarea>
-        <small>By signing you declare that all information you have entered is truthful and accurate.</small>
-        <div class="btn-block">
-          <button type="submit">Send</button>
-        </div>
-      </form>
+        <form action="http://localhost:5000/submit_form" method="POST">
+            <h1 id="typewriter"></h1>
+            <hr/>
+            <div class="item">
+                <p>Date of complaint</p>
+                <input type="date" name="date_of_complaint" required/>
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="item">
+                <p>Name</p>
+                <input type="text" name="first_name" placeholder="First" />
+                <input type="text" name="last_name" placeholder="Last" />
+            </div>
+            <div class="item address">
+                <p>Address</p>
+                <div class="street">
+                    <input type="text" name="street_address" placeholder="Street address" />
+                    <input type="text" name="street_address2" placeholder="Street address line 2" />
+                    <input type="text" name="city" placeholder="City" />
+                    <input type="text" name="region" placeholder="Region" />
+                    <input type="text" name="postal_code" placeholder="Postal / zip code" />
+                    <select name="country">
+                        <option value="">Country</option>
+                        <option value="1">Russia</option>
+                        <option value="2">Germany</option>
+                        <option value="3">France</option>
+                        <option value="4">Armenia</option>
+                        <option value="5">USA</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item location">
+                <p>Incident location</p>
+                <input type="text" name="incident_location"/>
+            </div>
+            <div class="item complaint-details">
+                <p>Consult regarding</p>
+                <div class="complaint-details-item">
+                    <textarea rows="5" name="consult_details"></textarea>
+                </div>
+            </div>
+            <!-- Video upload section -->
+            <div class="item">
+                <p>Upload Video</p>
+                <input type="file" name="video_upload" accept="video/*">
+            </div>
+            <h4>Your signature</h4>
+            <textarea rows="5" name="signature"></textarea>
+            <small>By signing you declare that all information you have entered is truthful and accurate.</small>
+            <div class="btn-block">
+                <button type="submit">Send</button>
+            </div>
+        </form>
     </div>
-  </body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var typewriterElement = document.getElementById('typewriter');
+            var text = 'How can we help you?';
+            var i = 0;
+            typewriterElement.innerText = '';
+
+            function typeWriter() {
+                if (i < text.length) {
+                    typewriterElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50); // Adjust the typing speed
+                }
+            }
+
+            typeWriter();
+        });
+    </script>
+</body>
 </html>
