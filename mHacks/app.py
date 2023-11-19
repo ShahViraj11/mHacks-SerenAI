@@ -17,13 +17,10 @@ if ENV_FILE:
     load_dotenv(ENV_FILE)
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\thelo\OneDrive\Desktop\Python Projects\mHacks-SerenAI\mHacks\serenai-405517-7d5605a5a880.json"
-
-
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
 
 oauth = OAuth(app)
-
 oauth.register(
     "auth0",
     client_id=env.get("AUTH0_CLIENT_ID"),
@@ -34,8 +31,9 @@ oauth.register(
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration',
 )
 
+latest_file = list()
 
-# Controllers API
+
 @app.route("/")
 def home():
     return render_template(
@@ -72,13 +70,14 @@ def logout():
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
+    global info_dict
+    info_dict = dict(session)
     session["user"] = token
     return redirect("/form")  # Redirect to the form page
 
 
 @app.route("/form")
 def form():
-    # Check if the user is logged in before showing the form
     if 'user' in session:
         return render_template("secondpage.html")
     else:
@@ -87,7 +86,7 @@ def form():
 
 @app.route('/submit_form', methods=['POST'])
 def submit_form():
-    uploaded_file = request.files['video_upload']
+    '''    uploaded_file = request.files['video_upload']
 
     if uploaded_file:
         storage_client = storage.Client()
@@ -97,14 +96,11 @@ def submit_form():
         blob = bucket.blob(destination_blob_name)
         blob.upload_from_file(uploaded_file)
         blob.content_type = 'video/mp4'
-        blob.patch()
-        return 'File uploaded successfully'
-    else:
-        return 'No file uploaded'
+        blob.patch()'''
+    
 
-
-
-'''    date_of_complaint = form_data.get('date_of_complaint')
+    form_data = request.form
+    date_of_complaint = form_data.get('date_of_complaint')
     first_name = form_data.get('first_name')
     last_name = form_data.get('last_name')
     street_address = form_data.get('street_address')
@@ -120,7 +116,9 @@ def submit_form():
     db = client['user_info']
     coll = db["addressconsole"]
 
+    
     item = {
+        "_id": info_dict['user']['userinfo']['email'],
         "date_of_complaint": date_of_complaint,
         "name": {"first": first_name, "last": last_name},
         "address": {
@@ -136,9 +134,17 @@ def submit_form():
         "signature": signature
     }
 
-    coll.insert_one(item)
+    # coll.insert_one(item)
 
-    return render_template("index.html")'''
+    return render_template("thank_you.html")
+
+@app.route('/pdf_redirect', methods=['POST'])
+def pdf_check():
+    db = client['user_info']
+    doc = db.addressconsole.find().sort({ "updated": -1 }).limit(1)
+    
+    return render_template()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 3000))
+ 

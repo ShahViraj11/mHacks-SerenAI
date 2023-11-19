@@ -440,9 +440,9 @@ blockquote {
   font-size: 68.5%;
 }
 
-/*---------------*/
-/***** Honey *****/
-/*---------------*/
+/---------------/
+/** Honey **/
+/---------------/
 
 figure.effect-honey {
   background: #4a3753;
@@ -612,6 +612,29 @@ figure.effect-honey:hover h2 i {
 p {
   line-height: 1.9;
 }
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: black; }
+}
+
+.typewriter span {
+  display: inline-block;
+  overflow: hidden;
+  border-right: .15em solid black; /* The typwriter cursor */
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation:
+    typing 3.5s steps(30, end),
+    blink-caret .75s step-end infinite;
+}
+
 
 @media (min-width: 768px) {
   .tm-intro-text-container {

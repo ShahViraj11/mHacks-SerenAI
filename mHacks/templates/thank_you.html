@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        /* Existing styles */
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('thank_you.png'); /* Replace with the path to the downloaded image */
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .content h1, .content p {
+            font-family: 'Courier New', Courier, monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid black;
+            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: black }
+        }
+
+        /* Style for the button */
+        .report-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #4CAF50; /* Green background */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .report-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Thank You!</h1>
+        <p>Your submission has been received. We appreciate your input.</p>
+        <form method="POST" action="/pdf_redirect">
+            <button type="submit">View Your Report</button>
+        </form>
+    </div>
+</body>
+</html>
