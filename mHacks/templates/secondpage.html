@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>How can we help you?</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        <style>
+    <style>
       html, body {
       min-height: 100%;
       }
@@ -158,58 +158,65 @@
       }
       }
     </style>
-  </head>
-  <body>
-    <div class="testbox">
-      <form action="/submit_form" method="POST">
+</head>
+<body>
+<div class="testbox">
+    <form action="http://localhost:5000/submit_form" method="POST">
         <h1>How can we help you?</h1>
         <p>Please send us details about the incident you would like to report. Our Complaint Center will analyze your complaint and take the appropriate measures in order that the reported situation will not occur at any other time in the future.</p>
         <hr/>
         <div class="item">
-          <p>Date of complaint</p>
-          <input type="date" name="date_of_complaint" required/>
-          <i class="fas fa-calendar-alt"></i>
+            <p>Date of complaint</p>
+            <input type="date" name="date_of_complaint" required/>
+            <i class="fas fa-calendar-alt"></i>
         </div>
         <div class="item">
-          <p>Name</p>
-          <input type="text" name="first_name" placeholder="First" />
-          <input type="text" name="last_name" placeholder="Last" />
+            <p>Name</p>
+            <input type="text" name="first_name" placeholder="First" />
+            <input type="text" name="last_name" placeholder="Last" />
         </div>
         <div class="item address">
-          <p>Address</p>
-          <div class="street">
-            <input type="text" name="street_address" placeholder="Street address" />
-            <input type="text" name="street_address2" placeholder="Street address line 2" />
-            <input type="text" name="city" placeholder="City" />
-            <input type="text" name="region" placeholder="Region" />
-            <input type="text" name="postal_code" placeholder="Postal / zip code" />
-            <select name="country">
-              <option value="">Country</option>
-              <option value="1">Russia</option>
-              <option value="2">Germany</option>
-              <option value="3">France</option>
-              <option value="4">Armenia</option>
-              <option value="5">USA</option>
-            </select>
-          </div>
+            <p>Address</p>
+            <div class="street">
+                <input type="text" name="street_address" placeholder="Street address" />
+                <input type="text" name="street_address2" placeholder="Street address line 2" />
+                <input type="text" name="city" placeholder="City" />
+                <input type="text" name="region" placeholder="Region" />
+                <input type="text" name="postal_code" placeholder="Postal / zip code" />
+                <select name="country">
+                    <option value="">Country</option>
+                    <option value="1">Russia</option>
+                    <option value="2">Germany</option>
+                    <option value="3">France</option>
+                    <option value="4">Armenia</option>
+                    <option value="5">USA</option>
+                </select>
+            </div>
         </div>
         <div class="item location">
-          <p>Incident location</p>
-          <input type="text" name="incident_location"/>
+            <p>Incident location</p>
+            <input type="text" name="incident_location"/>
         </div>
         <div class="item complaint-details">
-          <p>Consult regarding</p>
-          <div class="complaint-details-item">
-            <textarea rows="5" name="consult_details"></textarea>
-          </div>
+            <p>Consult regarding</p>
+            <div class="complaint-details-item">
+                <textarea rows="5" name="consult_details"></textarea>
+            </div>
         </div>
+
+        <!-- Video upload section -->
+        <div class="item">
+            <p>Upload Video</p>
+            <input type="file" name="video_upload" accept="video/*">
+        </div>
+
         <h4>Your signature</h4>
         <textarea rows="5" name="signature"></textarea>
         <small>By signing you declare that all information you have entered is truthful and accurate.</small>
         <div class="btn-block">
-          <button type="submit">Send</button>
+            <button type="submit">Send</button>
         </div>
-      </form>
-    </div>
-  </body>
+    </form>
+</div>
+</body>
 </html>
