@@ -1,3 +1,4 @@
+from pymongo import MongoClient
 import whisper
 from textblob import TextBlob
 import nltk
@@ -15,14 +16,18 @@ from reportlab.pdfgen import canvas
 import dotenv
 import os
 
+MONGODB_URI = "mongodb+srv://backupofamrit:GrJDmcTLkqxnR7Bo@aanlysiscluster.vwrt8og.mongodb.net/?retryWrites=true&w=majority"
+client = MongoClient(MONGODB_URI)
+db = client["user_info"]
+collection = db["addressconsole"]
 dataset = load_dataset("Amod/mental_health_counseling_conversations")
 corpus = [example['Context'] for example in dataset['train']]
-
 dotenv.load_dotenv()
-
 openai.api_key = os.environ['chatgpt_key']
 
-#convert_mov_to_wav("/Users/siddsatish/Desktop/finer_vid.mov", "/Users/siddsatish/Desktop/pythonProject2/finer_vid.wav")
+
+
+
 
 model = whisper.load_model('base')
 result = model.transcribe("/Users/siddsatish/Desktop/finer_vid.mov", fp16=False)
@@ -43,33 +48,14 @@ lemmatizer = WordNetLemmatizer()
 lemmatized = [lemmatizer.lemmatize(token) for token in tokens]
 
 preprocessed_text = ' '.join(lemmatized)
-
-# Add your transcribed text
 corpus.append(transcribed_text)
-
-# Initialize a TF-IDF Vectorizer
 vectorizer = TfidfVectorizer(stop_words='english')
-
-# Fit and transform the corpus
 tfidf_matrix = vectorizer.fit_transform(corpus)
-
-# Get feature names
 feature_names = vectorizer.get_feature_names_out()
-
-# Get TF-IDF score for the last document (your transcribed text)
 tfidf_scores = tfidf_matrix.toarray()[-1]
-
-# Map words to their TF-IDF scores
 word_scores = {word: score for word, score in zip(feature_names, tfidf_scores)}
-
-# Sort words by their scores
 sorted_word_scores = sorted(word_scores.items(), key=lambda x: x[1], reverse=True)
 
-# Print top N significant words
-top_n = 10
-print(f"Top {top_n} significant words:")
-for word, score in sorted_word_scores[:top_n]:
-    print(f"{word}: {score}")
 def analyze_sentiment(text):
     response = openai.Completion.create(
         engine="text-davinci-003",  # or another GPT-4 model
@@ -82,9 +68,8 @@ def analyze_sentiment(text):
 
 sentiment = analyze_sentiment(preprocessed_text)
 
-
 cap = cv2.VideoCapture("/Users/siddsatish/Desktop/finer_vid.mov")
-fps = cap.get(cv2.CAP_PROP_FPS)  # Frame rate of the video
+fps = cap.get(cv2.CAP_PROP_FPS)
 
 emotions_dict = {}
 while cap.isOpened():
@@ -92,7 +77,6 @@ while cap.isOpened():
     if not ret:
         break
 
-    # Process one frame per second
     for i in range(int(fps)-1):
         cap.read()  # Read and discard
 
@@ -108,12 +92,21 @@ while cap.isOpened():
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-print(emotions_dict)
+
 cap.release()
 cv2.destroyAllWindows()
 
 emotions = list(emotions_dict.keys())
 counts = list(emotions_dict.values())
+
+document = {
+    "event_id": "test_video_id",
+    "sentiment": sentiment,
+    "dominant_emotion": max(emotions_dict, key=emotions_dict.get),
+}
+
+# Insert the document into MongoDB
+result = collection.insert_one(document)
 
 plt.figure(figsize=(10, 6))
 plt.bar(emotions, counts, color='skyblue')
@@ -126,16 +119,8 @@ plt.savefig('emotion_graph.png', bbox_inches='tight')
 
 blob = TextBlob(preprocessed_text)
 
-# Get the sentiment polarity
 sentiment_polarity = blob.sentiment.polarity
-
-# Get the sentiment subjectivity
 sentiment_subjectivity = blob.sentiment.subjectivity
-
-print("Sentiment Polarity:", sentiment_polarity)
-print("Sentiment Subjectivity:", sentiment_subjectivity)
-
-
 
 introduction_text = """
 This Analysis Report provides a comprehensive overview of the emotional states 
