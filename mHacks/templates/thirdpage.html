@@ -12,7 +12,7 @@
         try {
             stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
             document.querySelector('video').srcObject = stream;
-            document.querySelector('video').muted = true; // Mute the video element
+            document.querySelector('video').muted = true;
         } catch (err) {
             console.error('Error accessing media devices.', err);
             return;
@@ -35,32 +35,6 @@
         function submit() {
         }
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-        const startButton = document.getElementById('start');
-        const submitButton = document.getElementById('submit');
-        startButton.addEventListener('click', () => {
-            if (!startButton.disabled) {
-                startRecording();
-            } else {
-                stopRecording();
-                startButton.textContent = 'Record';
-                submitButton.disabled = false;
-            }
-        });
-
-        submitButton.addEventListener('click', () => {
-            const blob = new Blob(recordedBlobs, { type: 'video/webm' });
-            const formData = new FormData();
-            formData.append('recordedVideo', blob);
-
-            fetch('/submit_video', {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                console.log('Video submission response:', response);
-            });
-        });
-    });
 
     </script>
 

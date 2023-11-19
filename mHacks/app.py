@@ -117,8 +117,7 @@ def submit_form():
         "consult_details": consult_details,
         "signature": signature
     }
-    #coll.insert_one(item)
-
+    coll.insert_one(item)
     return render_template("thirdpage.html")
 
 
