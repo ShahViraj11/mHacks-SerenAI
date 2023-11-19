@@ -130,6 +130,9 @@ def hello_gcs(cloud_event):
     dominant_emotion_message = (f"The dominant emotion expressed in the video is '{dominant_emotion}' "
                                 f"with a count of {dominant_emotion_count}. This suggests that during the video,"
                                 f" the most frequently observed emotional expression was one of '{dominant_emotion}'.")
+
+    top_5_words = sorted_words_scores[:5]
+    words, scores = zip(*top_5_words)
     
     document = {
         "event_id": cloud_event["id"],
@@ -141,8 +144,9 @@ def hello_gcs(cloud_event):
         "sentiment": sentiment,
         "emotions_dict": emotions_dict,
         "sent_analysis":sent_analysis,
-        "dominant_emotion_message": dominant_emotion_message
-        
+        "dominant_emotion_message": dominant_emotion_message,
+        "words": words,
+        "scores":scores
     }
 
     result = collection.insert_one(document)
