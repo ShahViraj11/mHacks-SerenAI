@@ -131,7 +131,7 @@ def hello_gcs(cloud_event):
                                 f"with a count of {dominant_emotion_count}. This suggests that during the video,"
                                 f" the most frequently observed emotional expression was one of '{dominant_emotion}'.")
 
-    top_5_words = sorted_words_scores[:5]
+    top_5_words = sorted_word_scores[:5]
     words, scores = zip(*top_5_words)
     
     document = {
