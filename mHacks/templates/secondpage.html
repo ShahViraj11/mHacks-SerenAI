@@ -83,7 +83,7 @@
 </head>
 <body>
     <div class="testbox">
-        <form action="http://localhost:5000/submit_form" method="POST">
+        <form action="/submit_form" method="POST" enctype="multipart/form-data">
             <h1 id="typewriter"></h1>
             <hr/>
             <div class="item">
@@ -124,7 +124,6 @@
                     <textarea rows="5" name="consult_details"></textarea>
                 </div>
             </div>
-            <!-- Video upload section -->
             <div class="item">
                 <p>Upload Video</p>
                 <input type="file" name="video_upload" accept="video/*">

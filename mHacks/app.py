@@ -1,12 +1,13 @@
 import json
 from os import environ as env
+import os
 from urllib.parse import quote_plus, urlencode
-
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, redirect, render_template, session, url_for, request
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from google.cloud import storage
 
 uri = "mongodb+srv://backupofamrit:GrJDmcTLkqxnR7Bo@aanlysiscluster.vwrt8og.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(uri, server_api=ServerApi('1'))
@@ -14,6 +15,9 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r"C:\Users\thelo\OneDrive\Desktop\Python Projects\mHacks-SerenAI\mHacks\serenai-405517-7d5605a5a880.json"
+
 
 app = Flask(__name__)
 app.secret_key = env.get("APP_SECRET_KEY")
@@ -83,8 +87,24 @@ def form():
 
 @app.route('/submit_form', methods=['POST'])
 def submit_form():
-    form_data = request.form
-    date_of_complaint = form_data.get('date_of_complaint')
+    uploaded_file = request.files['video_upload']
+
+    if uploaded_file:
+        storage_client = storage.Client()
+        bucket_name = 'user_mood_bucket'
+        destination_blob_name = 'user_video.mp4'
+        bucket = storage_client.get_bucket(bucket_name)
+        blob = bucket.blob(destination_blob_name)
+        blob.upload_from_file(uploaded_file)
+        blob.content_type = 'video/mp4'
+        blob.patch()
+        return 'File uploaded successfully'
+    else:
+        return 'No file uploaded'
+
+
+
+'''    date_of_complaint = form_data.get('date_of_complaint')
     first_name = form_data.get('first_name')
     last_name = form_data.get('last_name')
     street_address = form_data.get('street_address')
@@ -118,9 +138,7 @@ def submit_form():
 
     coll.insert_one(item)
 
-    return redirect(url_for('thank_you'))
-
-
+    return render_template("index.html")'''
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 3000))

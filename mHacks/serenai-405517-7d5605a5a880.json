@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "serenai-405517",
+  "private_key_id": "7d5605a5a880e934fca21589bfdf33b2e686b7cf",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7y4ms/YcFc2O1\nKcxtIXt4rhlofTY+ziVzUOSJ3X/3bcPAL6BWkm4Qd92I1AX8hEwhiBrban0MZW6T\nwuouEvDR3J0ce905irHtPuwSbttLM1vnN24MdUd0+3llPEmmgOOeJawXX24Vy+IX\nup8r0+f9ZWwpjhTnjnsHuV7qX5cMYMwMfXYUxCPJvs2yxfoGmoL07wLDS+yRcSJi\n4j6K4Fmv7IUueBNlKkzRDb68YjXZpRA5X5AJMlvsciHe2GkYDNo5SEZ0CNSs25AE\n01Dhd9XduqMf5LOB0WNMpDIzTwgipXLLEJ4CIY78lBVJSTj3vJzmz7BT2V3zMdJC\nfaEWfGyXAgMBAAECggEATu8Z8srrplheeAbWJKa2qb5v8pHyq4plhmdhcCtYfs01\nwsGiANFyjtx7EuifjYikIVH+i+xiHEREKrp6SRxv+Z3jsdXEYkvQRrq0ankLFrxD\nLFgJmxXuj5al623gPSqewdnu0DIt6N52LWglQDxFHiazxHGyirPCNbhuU1ATgsEy\nmOMrYiFVJtnDuLL3zXDAGVMquNr+YgUMZrhNxApKhtLwp7fkYoUhZygf6dpcLmrs\n26V3d/fJHU8nxhw8x3Sd/BALa/k7v4IlVI3CtCuInE1JeB2yIkqoXZJA2y8vNVTK\n9NYvXRTmYSuhNr/g2BzYDS9PJgy8GhD4bTlqo4RoOQKBgQDfQg68F5VceVIwkOKP\nJ7svXXiV8hu0ihChOiuqrFEMYjBi/lPfs5CSpgjrRc7pfPgR8sroTjPqiMAsaduI\n4MMOXHIMhC39hxOL5eya36hATO+FgeePfjJHKwm8RdMGCX9Vi2wk4XHcyjRCyNhm\niJQJzlb2zKA306ncUxmtm9ViqQKBgQDXVhFTWHNzCRRto4/M3++bsGAr8Jt1IyVu\nkd2oCZZrieCWRlj1n8VhATUrZbbztu1pklxKMEYiy2IspdtenjfQcB40I0AbuJ4e\nT+6mVs5O9fBXqhsZpvMtItHXLvXkTuR48yW6bNRC4BrHOH7EDrSXe1comWzm/r9/\nety71ewdPwKBgCOuQQCanEpdMV+FqE/Mv8PAIoeEXB0se5/o1hW+2G0sPCN2Fh2I\nazCkzIQdcgYq7NKhhQA/j1iKZnwypt1nXoUrDScm8Nq1/c+7/WZ7HD66jQU/T6zF\nNG/fVvz6A9HRLsKTN8NlLHdm8ZdC1iL87PvsOEXVSj3h3CHUPiRa5W2RAoGBALj+\nGdhOTrBvBnvCXlGVuJU6CwT0qbkSPqAk9BXeVrmAM88mFFq/raPOk8z6jxgE+SUP\nNfYOTtKpg2fz/OfmaPDKwUftWK/4BO7poI6KWKcBJj9JxgpdoOAP39JLZ7eCB0nZ\nKXpk8F2bhaXM5Sqtr3vL3G7mj+ZKyF1OQb+k4jmlAoGAZWqw/lPHuBrQ0ekph7rq\navAP23W/mD6aMs3AbiTy6YV/VuwTgMSsahJMbOVRwiEEgQ+RP8MCc3uRPABCYva/\no6P6DQ8bjQf6/OTf3uEye6LwnC0EfDjcoFEQwLYrISrL6FpmrmI8MOsDbOAvGXYp\nBbO2tdNkzzICPRBOQnCSw60=\n-----END PRIVATE KEY-----\n",
+  "client_email": "videouploader@serenai-405517.iam.gserviceaccount.com",
+  "client_id": "104048585113924010947",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/videouploader%40serenai-405517.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
