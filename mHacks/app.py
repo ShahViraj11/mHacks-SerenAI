@@ -1,6 +1,3 @@
-"""Python Flask WebApp Auth0 integration example
-"""
-
 import json
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
