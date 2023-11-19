@@ -104,24 +104,22 @@ def submit_form():
     coll = db["addressconsole"]
 
     item = {
+        "_id" : "testing123",
         "date_of_complaint": date_of_complaint,
         "name": {"first": first_name, "last": last_name},
-        "address": {
-            "street": street_address,
-            "street2": street_address2,
-            "city": city,
-            "region": region,
-            "postal_code": postal_code,
-            "country": country
-        },
+        "address": [street_address,
+                    street_address2,
+                    city,
+                    region,
+                    postal_code,
+                    country],
         "incident_location": incident_location,
         "consult_details": consult_details,
         "signature": signature
     }
+    #coll.insert_one(item)
 
-    coll.insert_one(item)
-
-    return redirect(url_for('thank_you'))
+    return render_template("thirdpage.html")
 
 
 

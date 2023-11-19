@@ -2,66 +2,77 @@
 <html>
 <head>
     <title>Thank You</title>
-    <!-- Add any additional head elements here -->
     <script>
         let mediaRecorder;
         let recordedBlobs;
         let stream;
 
+        async function startRecording() {
+        recordedBlobs = [];
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            document.querySelector('video').srcObject = stream;
+            document.querySelector('video').muted = true; // Mute the video element
+        } catch (err) {
+            console.error('Error accessing media devices.', err);
+            return;
+            }
+        } 
+        function start() {
+            document.getElementById('stop').disabled = false;
+            document.getElementById('start').disabled = true;
+            startRecording();
+        }
+
+        function stop() {
+            document.getElementById('stop').disabled = true;
+            document.getElementById('start').disabled = false;
+            mediaRecorder.stop();
+            stream.getTracks().forEach(track => track.stop());
+            document.querySelector('video').muted = false;
+        }
+
+        function submit() {
+        }
+
         document.addEventListener('DOMContentLoaded', (event) => {
-            const startButton = document.getElementById('start');
-            const submitButton = document.getElementById('submit');
-            startButton.addEventListener('click', () => {
-                if (startButton.textContent === 'Record') {
-                    startRecording();
-                } else {
-                    stopRecording();
-                    startButton.textContent = 'Record';
-                    submitButton.disabled = false;
-                }
-            });
-
-            submitButton.addEventListener('click', () => {
-                const blob = new Blob(recordedBlobs, { type: 'video/webm' });
-                const formData = new FormData();
-                formData.append('recordedVideo', blob);
-
-                fetch('/submit_video', {
-                    method: 'POST',
-                    body: formData
-                }).then(response => {
-                    console.log('Video submission response:', response);
-                });
-            });
+        const startButton = document.getElementById('start');
+        const submitButton = document.getElementById('submit');
+        startButton.addEventListener('click', () => {
+            if (!startButton.disabled) {
+                startRecording();
+            } else {
+                stopRecording();
+                startButton.textContent = 'Record';
+                submitButton.disabled = false;
+            }
         });
 
-        async function startRecording() {
-    recordedBlobs = [];
-    try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        document.querySelector('video').srcObject = stream;
-        document.querySelector('video').muted = true; // Mute the video element
-    } catch (err) {
-        console.error('Error accessing media devices.', err);
-        return;
-    }
-    // ... rest of your startRecording function ...
-}
+        submitButton.addEventListener('click', () => {
+            const blob = new Blob(recordedBlobs, { type: 'video/webm' });
+            const formData = new FormData();
+            formData.append('recordedVideo', blob);
 
-function stopRecording() {
-    mediaRecorder.stop();
-    stream.getTracks().forEach(track => track.stop());
-    document.querySelector('video').muted = false; // Unmute the video element
-}
+            fetch('/submit_video', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                console.log('Video submission response:', response);
+            });
+        });
+    });
 
     </script>
+
+
 </head>
 <body>
     <h1>Thank You for Your Submission!</h1>
     <p>Your information has been successfully submitted.</p>
     <video controls autoplay></video>
-    <button id="start">Record</button>
-    <button id="submit" disabled>Submit Video</button>
+    <button id="start" onclick="start()">Record</button>
+    <button id="stop" onclick="stop()" disabled>Stop</button>
+    <button id="submit" onclick="submit" disabled>Submit Video</button>
 </body>
 </html>
 
