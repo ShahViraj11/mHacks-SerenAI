@@ -105,3 +105,11 @@ sentiment_polarity = blob.sentiment.polarity
 sentiment_subjectivity = blob.sentiment.subjectivity
 
 sent_analysis = sentiment_analysis(sentiment_polarity, sentiment_subjectivity, sorted_word_scores)
+####################
+
+dominant_emotion = max(user_db['emotions_dict'], key=user_db['emotions_dict'].get)
+dominant_emotion_count = user_db['emotions_dict'][dominant_emotion]
+
+dominant_emotion_message = (f"The dominant emotion expressed in the video is '{dominant_emotion}' "
+                            f"with a count of {dominant_emotion_count}. This suggests that during the video,"
+                            f" the most frequently observed emotional expression was one of '{dominant_emotion}'.")
