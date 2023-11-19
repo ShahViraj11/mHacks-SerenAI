@@ -36,6 +36,24 @@ def analyze_sentiment(text):
     )
     return response.choices[0].text.strip()
 
+def sentiment_analysis(sentiment_polarity, sentiment_subjectivity, top_words):
+    top_words_str = ', '.join([f"{word}: {score:.2f}" for word, score in top_words[:10]])
+    # Construct the prompt
+    prompt = (
+        f"This analysis is based on the sentiment scores and significant keywords from the text. "
+        f"The sentiment polarity is {sentiment_polarity:.2f} and subjectivity is {sentiment_subjectivity:.2f}. "
+        f"The top significant words are {top_words_str}. "
+        f"Please analyze what these sentiment scores and keywords imply about the person's emotional state. "
+        f"Provide a 4-5 sentence response discussing the emotional state and the relevance of these words."
+        f"Also, Please write the response as you are talking to the person directly. "
+    )
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=200
+    )
+    return response.choices[0].text.strip()
+
 @functions_framework.cloud_event
 def hello_gcs(cloud_event):
     data = cloud_event.data
@@ -100,6 +118,12 @@ def hello_gcs(cloud_event):
     cv2.destroyAllWindows()
 
 
+    blob = TextBlob(preprocessed_text)
+    sentiment_polarity = blob.sentiment.polarity
+    sentiment_subjectivity = blob.sentiment.subjectivity
+    
+    sent_analysis = sentiment_analysis(sentiment_polarity, sentiment_subjectivity, sorted_word_scores)
+    
     document = {
         "event_id": cloud_event["id"],
         "event_type": cloud_event["type"],
@@ -108,7 +132,8 @@ def hello_gcs(cloud_event):
         "created": data["timeCreated"],
         "updated": data["updated"],
         "sentiment": sentiment,
-        "dominant_emotion": max(emotions_dict, key=emotions_dict.get),
+        "emotions_dict": emotions_dict,
+        "sent_analysis":sent_analysis,
         
     }
 
