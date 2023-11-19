@@ -7,12 +7,12 @@
         min-height: 100%;
         margin: 0;
         padding: 0;
-        background-image: url('./static/img/form.png'); /* Add your background image URL here */
-        background-size: cover; /* Ensure the image covers the full background */
-        background-position: center; /* Center the image */
+        background-image: url('./static/img/form.png'); /* Background image */
+        background-size: cover;
+        background-position: center;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
       }
       body, div, form, input, select, p {
         padding: 0;
@@ -20,16 +20,21 @@
         outline: none;
         font-family: Roboto, Arial, sans-serif;
         font-size: 14px;
-        color: #fff; /* Adjust text color for visibility */
+        color: #fff; /* Text color */
         line-height: 22px;
       }
       h1, h4 {
-        color: #fff; /* Adjust heading color for visibility */
+        color: #fff;
+      }
+      h2 {
+        color: #fff; /* New heading color */
+        text-align: center; /* Center the heading */
+        margin-bottom: 20px; /* Spacing below the heading */
       }
       form {
-        width: 50%; /* Adjust form width */
+        width: 50%;
         padding: 20px;
-        background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for form */
+        background: rgba(255, 255, 255, 0.8);
         box-shadow: 0 2px 5px #ccc;
       }
       input, select, textarea {
@@ -37,15 +42,16 @@
         margin-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 3px;
-        background: #333; /* Dark background for inputs */
-        color: #fff; /* Input text color */
+        background: #333;
+        color: #fff;
       }
-      /* Other styles remain unchanged */
+      /* Rest of the styles unchanged */
     </style>
   </head>
   <body>
     <div class="testbox">
       <form action="http://localhost:5000/submit_form" method="POST">
+        <h2>What Brings You Here?</h2> <!-- New Title -->
         <h1>How can we help you?</h1>
         <p>Please send us details about the incident you would like to report. Our Complaint Center will analyze your complaint and take the appropriate measures in order that the reported situation will not occur at any other time in the future.</p>
         <hr/>
