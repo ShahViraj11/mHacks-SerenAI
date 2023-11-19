@@ -95,3 +95,13 @@ while cap.isOpened():
 print(emotions_dict)
 cap.release()
 cv2.destroyAllWindows()
+
+blob = TextBlob(preprocessed_text)
+
+# Get the sentiment polarity
+sentiment_polarity = blob.sentiment.polarity
+
+# Get the sentiment subjectivity
+sentiment_subjectivity = blob.sentiment.subjectivity
+
+sent_analysis = sentiment_analysis(sentiment_polarity, sentiment_subjectivity, sorted_word_scores)
