@@ -12,11 +12,15 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import dotenv
+import os
 
 dataset = load_dataset("Amod/mental_health_counseling_conversations")
 corpus = [example['Context'] for example in dataset['train']]
 
-openai.api_key = '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'
+dotenv.load_dotenv()
+
+openai.api_key = os.environ['chatgpt_key']
 
 #convert_mov_to_wav("/Users/siddsatish/Desktop/finer_vid.mov", "/Users/siddsatish/Desktop/pythonProject2/finer_vid.wav")
 
@@ -72,7 +76,7 @@ def analyze_sentiment(text):
         prompt=f"Analyze the following text to determine the person's emotional state and possible reasons for these emotions?"
                f" Please write the response as you are talking to the person directly and give them an analysis of their emotional state"
                f". Make sure the response is 3-4 sentences.\n\nText: \"{text}\"",
-        max_tokens=100
+        max_tokens=130
     )
     return response.choices[0].text.strip()
 
