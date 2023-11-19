@@ -11,7 +11,7 @@ https://www.tooplate.com/view/2117-infinite-loop
 body {
 	font-family: "Raleway", sans-serif;
 	font-size: 1.2em;
-  color: #707070;
+  color: black;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -85,12 +85,12 @@ blockquote {
 }
 
 .tm-navbar.scroll {
-  background-color: White;
+  background-color: white;
   border-bottom: 1px solid #e9ecef;
 }
 
 .navbar-brand {
-  color: Black;
+  color: white;
   font-size: 1.4rem;
   font-weight: bold;
 }
@@ -109,7 +109,7 @@ blockquote {
 }
 
 .tm-nav-link {
-  color: Black;
+  color: white;
 }
 
 .tm-navbar.scroll .tm-nav-link {
@@ -124,7 +124,7 @@ blockquote {
 }
 
 .navbar-toggler {
-  border: 1px solid Black;
+  border: 1px solid white;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -146,7 +146,7 @@ blockquote {
 
 #infinite {
 	background-color: #222;
-  background-image: url('../../static/img/newinfiniteloop.png');
+  background-image: url('../../static/img/bg1.png');
   background-repeat: no-repeat;
   height: 100vh;
   min-height: 375px;
@@ -277,7 +277,7 @@ blockquote {
 
 @media (max-width: 991px) {
   #testimonials {
-    background-image: url(../img/infinite-loop-02-mobile.jpg);
+    background-image: url(../img/testimonial_bg.png);
   }
 }
 
@@ -549,7 +549,7 @@ figure.effect-honey:hover h2 i {
 	width: 90%;
   padding: 8px 20px;
   border-radius: 6px;
-  border: 1px solid white;
+  border: 1px solid black;
   background: transparent;
   color: white;
 }
@@ -600,7 +600,7 @@ figure.effect-honey:hover h2 i {
 }
 
 .tm-footer-link {
-  color: white;
+  color: black;
 }
 
 .tm-footer-link:hover,

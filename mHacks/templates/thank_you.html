@@ -9,7 +9,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('thank_you.png'); /* Replace with the path to the downloaded image */
+            background-image: url('./static/img/thank_you.jpeg'); /* Replace with the path to the downloaded image */
             background-size: cover;
             height: 100vh;
             display: flex;
@@ -64,7 +64,7 @@
         <h1>Thank You!</h1>
         <p>Your submission has been received. We appreciate your input.</p>
         <form method="POST" action="/pdf_redirect">
-            <button type="submit">View Your Report</button>
+            <button class="report-button" type="submit">View Your Report</button>
         </form>
     </div>
 </body>

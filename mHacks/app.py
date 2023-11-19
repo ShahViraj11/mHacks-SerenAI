@@ -228,7 +228,6 @@ def submit_form():
         blob.content_type = 'video/mp4'
         blob.patch()
     
-
     form_data = request.form
     date_of_complaint = form_data.get('date_of_complaint')
     first_name = form_data.get('first_name')
