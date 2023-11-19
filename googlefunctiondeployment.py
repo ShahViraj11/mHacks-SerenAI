@@ -12,20 +12,23 @@ import cv2
 from deepface import DeepFace
 from datasets import load_dataset
 from sklearn.feature_extraction.text import TfidfVectorizer
-
-
 MONGODB_URI = "mongodb+srv://backupofamrit:GrJDmcTLkqxnR7Bo@aanlysiscluster.vwrt8og.mongodb.net/?retryWrites=true&w=majority"
-openai.api_key = "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"
 
 client = MongoClient(MONGODB_URI)
+openai.api_key = ""
+
 db = client["user_info"]
-collection = db["addressconsole"]
+collection = db["videoanalyses"]
+
+storage_client = storage.Client()
 dataset = load_dataset("Amod/mental_health_counseling_conversations")
 corpus = [example['Context'] for example in dataset['train']]
+model = whisper.load_model('base')
+
 
 def analyze_sentiment(text):
     response = openai.Completion.create(
-        engine="text-davinci-003",  # or another GPT-4 model
+        engine="text-davinci-003",
         prompt=f"Analyze the following text to determine the person's emotional state and possible reasons for these emotions?"
                f" Please write the response as you are talking to the person directly and give them an analysis of their emotional state"
                f". Make sure the response is 3-4 sentences.\n\nText: \"{text}\"",
@@ -35,15 +38,16 @@ def analyze_sentiment(text):
 
 @functions_framework.cloud_event
 def hello_gcs(cloud_event):
-    storage_client = storage.Client()
-    bucket_name = 'user_mood_bucket'
-    video_file_name = 'finer_vid.mov'
+    data = cloud_event.data
+    bucket_name = data["bucket"]
+    file_name = data["name"]
+
     bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(video_file_name)
-    temp_video_path = '/tmp/temp_video.mov'
+    blob = bucket.blob(file_name)
+    temp_video_path = f"/tmp/{file_name}"
     blob.download_to_filename(temp_video_path)
-    model = whisper.load_model('base')
     result = model.transcribe(temp_video_path, fp16=False)
+
     transcribed_text = result["text"]
     nltk.download('punkt')
     nltk.download('stopwords')
@@ -95,17 +99,21 @@ def hello_gcs(cloud_event):
     cap.release()
     cv2.destroyAllWindows()
 
-    emotions = list(emotions_dict.keys())
-    counts = list(emotions_dict.values())
 
     document = {
-    "event_id": "test_video_id",
-    "sentiment": sentiment,
-    "dominant_emotion": max(emotions_dict, key=emotions_dict.get),
+        "event_id": cloud_event["id"],
+        "event_type": cloud_event["type"],
+        "bucket": bucket_name,
+        "file": file_name,
+        "created": data["timeCreated"],
+        "updated": data["updated"],
+        "sentiment": sentiment,
+        "dominant_emotion": max(emotions_dict, key=emotions_dict.get),
+        
     }
 
     result = collection.insert_one(document)
+    print(f"Inserted document with _id: {result.inserted_id}")
 
-
-if _name_ == "_main_":
-    hello_gcs(None)  # For testing the function locally
+if __name__ == "__main__":
+    hello_gcs(None)
