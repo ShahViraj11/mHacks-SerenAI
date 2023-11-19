@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You</title>
+    <!-- Add any additional head elements here -->
+    <script>
+        let mediaRecorder;
+        let recordedBlobs;
+        let stream;
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const startButton = document.getElementById('start');
+            const submitButton = document.getElementById('submit');
+            startButton.addEventListener('click', () => {
+                if (startButton.textContent === 'Record') {
+                    startRecording();
+                } else {
+                    stopRecording();
+                    startButton.textContent = 'Record';
+                    submitButton.disabled = false;
+                }
+            });
+
+            submitButton.addEventListener('click', () => {
+                const blob = new Blob(recordedBlobs, { type: 'video/webm' });
+                const formData = new FormData();
+                formData.append('recordedVideo', blob);
+
+                fetch('/submit_video', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    console.log('Video submission response:', response);
+                });
+            });
+        });
+
+        async function startRecording() {
+    recordedBlobs = [];
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        document.querySelector('video').srcObject = stream;
+        document.querySelector('video').muted = true; // Mute the video element
+    } catch (err) {
+        console.error('Error accessing media devices.', err);
+        return;
+    }
+    // ... rest of your startRecording function ...
+}
+
+function stopRecording() {
+    mediaRecorder.stop();
+    stream.getTracks().forEach(track => track.stop());
+    document.querySelector('video').muted = false; // Unmute the video element
+}
+
+    </script>
+</head>
+<body>
+    <h1>Thank You for Your Submission!</h1>
+    <p>Your information has been successfully submitted.</p>
+    <video controls autoplay></video>
+    <button id="start">Record</button>
+    <button id="submit" disabled>Submit Video</button>
+</body>
+</html>
+
